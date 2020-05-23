@@ -94,3 +94,7 @@ Mainly quality of life improvements.
 | Horizontal | Vertical | HiDPI |
 | :--- | :--- | :--- |
 | 1280 | 854 | True |
+
+## Current Isssues
+
+* I2C Screen sometimes gets into bad state
