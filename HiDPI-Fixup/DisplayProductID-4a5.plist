@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>DisplayProductName</key>
+	<string>HP X2 Display</string>
+	<key>DisplayProductID</key>
+	<integer>1189</integer>
+	<key>DisplayVendorID</key>
+	<integer>12516</integer>
+	<key>scale-resolutions</key>
+	<array>
+		<data>AAAFAAAAA1Y=</data>
+		<data>AAAKAAAABqwAAAAB</data>
+	</array>
+</dict>
+</plist>
