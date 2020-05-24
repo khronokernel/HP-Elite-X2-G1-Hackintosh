@@ -1,24 +1,7 @@
 /*
- * Intel ACPI Component Architecture
- * AML/ASL+ Disassembler version 20190509 (64-bit version)
- * Copyright (c) 2000 - 2019 Intel Corporation
- * 
- * Disassembling to symbolic ASL+ operators
- *
- * Disassembly of /Users/mykolagrymalyuk/Documents/GitHub/HP-Elite-X2-G1-Hackintosh/ACPI/Custom-SSDTs/Compiled/SSDT-BAT.aml, Fri May 22 19:00:30 2020
- *
- * Original Table Header:
- *     Signature        "SSDT"
- *     Length           0x000015AE (5550)
- *     Revision         0x02
- *     Checksum         0xEC
- *     OEM ID           "hack"
- *     OEM Table ID     "BATTERY"
- *     OEM Revision     0x00000000 (0)
- *     Compiler ID      "INTL"
- *     Compiler Version 0x20180427 (538444839)
+ * Following SSDT-BAT was taken from midi1996 with ACPI Hotpatch changes
  */
-DefinitionBlock ("", "SSDT", 2, "hack", "BATTERY", 0x00000000)
+DefinitionBlock ("", "SSDT", 2, "Slav", "BATTERY", 0x00000000)
 {
     External (_SB_.NBST, PkgObj)
     External (_SB_.NBTI, PkgObj)

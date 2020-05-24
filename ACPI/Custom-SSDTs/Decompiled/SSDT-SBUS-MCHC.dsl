@@ -1,24 +1,7 @@
 /*
- * Intel ACPI Component Architecture
- * AML/ASL+ Disassembler version 20190509 (64-bit version)
- * Copyright (c) 2000 - 2019 Intel Corporation
- * 
- * Disassembling to symbolic ASL+ operators
- *
- * Disassembly of /Users/mykolagrymalyuk/Documents/GitHub/HP-Elite-X2-G1-Hackintosh/ACPI/Custom-SSDTs/Compiled/SSDT-SBUS-MCHC.aml, Fri May 22 19:00:30 2020
- *
- * Original Table Header:
- *     Signature        "SSDT"
- *     Length           0x00000108 (264)
- *     Revision         0x02
- *     Checksum         0xEA
- *     OEM ID           "hack"
- *     OEM Table ID     "MCHCSBUS"
- *     OEM Revision     0x00000000 (0)
- *     Compiler ID      "INTL"
- *     Compiler Version 0x20180427 (538444839)
+ * Allows AppleSMBus to load
  */
-DefinitionBlock ("", "SSDT", 2, "hack", "MCHCSBUS", 0x00000000)
+DefinitionBlock ("", "SSDT", 2, "Slav", "MCHCSBUS", 0x00000000)
 {
     External (_SB_.PCI0, DeviceObj)
     External (_SB_.PCI0.SBUS.BUS0, DeviceObj)

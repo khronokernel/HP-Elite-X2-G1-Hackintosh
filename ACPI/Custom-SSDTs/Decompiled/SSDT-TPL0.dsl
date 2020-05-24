@@ -1,24 +1,7 @@
 /*
- * Intel ACPI Component Architecture
- * AML/ASL+ Disassembler version 20190509 (64-bit version)
- * Copyright (c) 2000 - 2019 Intel Corporation
- * 
- * Disassembling to symbolic ASL+ operators
- *
- * Disassembly of /Users/mykolagrymalyuk/Documents/GitHub/HP-Elite-X2-G1-Hackintosh/ACPI/Custom-SSDTs/Compiled/SSDT-TPL0.aml, Fri May 22 19:00:30 2020
- *
- * Original Table Header:
- *     Signature        "SSDT"
- *     Length           0x000000E3 (227)
- *     Revision         0x02
- *     Checksum         0x5E
- *     OEM ID           "hack"
- *     OEM Table ID     "PMCR"
- *     OEM Revision     0x00000000 (0)
- *     Compiler ID      "INTL"
- *     Compiler Version 0x20180427 (538444839)
+ * Attempts to fix I2C touchscreen state
  */
-DefinitionBlock ("", "SSDT", 2, "hack", "PMCR", 0x00000000)
+DefinitionBlock ("", "SSDT", 2, "Slav", "_I2C", 0x00000000)
 {
     External (_SB_.PCI0.I2C0.TPL0, DeviceObj)
     External (_SB_.PCI0.I2C0.TPL0.XPS0, MethodObj)    // 0 Arguments

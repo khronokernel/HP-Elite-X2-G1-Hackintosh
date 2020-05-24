@@ -1,22 +1,5 @@
 /*
- * Intel ACPI Component Architecture
- * AML/ASL+ Disassembler version 20190509 (64-bit version)
- * Copyright (c) 2000 - 2019 Intel Corporation
- * 
- * Disassembling to symbolic ASL+ operators
- *
- * Disassembly of /Users/mykolagrymalyuk/Documents/GitHub/HP-Elite-X2-G1-Hackintosh/ACPI/Custom-SSDTs/Compiled/SSDT-EC-USBX.aml, Fri May 22 19:00:30 2020
- *
- * Original Table Header:
- *     Signature        "SSDT"
- *     Length           0x00000116 (278)
- *     Revision         0x02
- *     Checksum         0x74
- *     OEM ID           "Slav"
- *     OEM Table ID     "SsdtEC"
- *     OEM Revision     0x00001000 (4096)
- *     Compiler ID      "INTL"
- *     Compiler Version 0x20190509 (538510601)
+ * Fixes USB Power Properties and creates a fake EC to satisfy macOS
  */
 DefinitionBlock ("", "SSDT", 2, "Slav", "SsdtEC", 0x00001000)
 {

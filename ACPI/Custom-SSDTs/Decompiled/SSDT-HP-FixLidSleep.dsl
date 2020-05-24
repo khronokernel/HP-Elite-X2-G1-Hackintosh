@@ -1,24 +1,7 @@
 /*
- * Intel ACPI Component Architecture
- * AML/ASL+ Disassembler version 20190509 (64-bit version)
- * Copyright (c) 2000 - 2019 Intel Corporation
- * 
- * Disassembling to symbolic ASL+ operators
- *
- * Disassembly of /Users/mykolagrymalyuk/Documents/GitHub/HP-Elite-X2-G1-Hackintosh/ACPI/Custom-SSDTs/Compiled/SSDT-HP-FixLidSleep.aml, Fri May 22 19:00:30 2020
- *
- * Original Table Header:
- *     Signature        "SSDT"
- *     Length           0x00000086 (134)
- *     Revision         0x02
- *     Checksum         0x1F
- *     OEM ID           "hack"
- *     OEM Table ID     "RMKB"
- *     OEM Revision     0x00000000 (0)
- *     Compiler ID      "INTL"
- *     Compiler Version 0x20190509 (538510601)
+ * Attempts to fix Keyboad lid sleep/wake
  */
-DefinitionBlock ("", "SSDT", 2, "hack", "RMKB", 0x00000000)
+DefinitionBlock ("", "SSDT", 2, "Slav", "RMKB", 0x00000000)
 {
     External (_SB_.PCI0.LPCB.PS2K, DeviceObj)
 
