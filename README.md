@@ -10,6 +10,10 @@ AUDIO:   CX20724
 Touch:   Wacom HID Based Display(WCOM4814)
 ```
 
+## Special Notes
+
+* Pulls 4.8w at Idle by default, 8w on average
+
 ## ACPI
 
 
@@ -98,3 +102,4 @@ Mainly quality of life improvements.
 ## Current Isssues
 
 * I2C Screen sometimes gets into bad state
+* IOUSBHost crashing in Catalin(Mojave is fine)
