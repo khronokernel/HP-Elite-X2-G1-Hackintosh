@@ -15,7 +15,8 @@ Touch:   Wacom HID Based Display(WCOM4814)
 ## ACPI
 
 
-For those curious, I've also provided an ACPI dump of my laptop(BIOS ver. 1.48 Rev.A)
+For those curious, I've also provided an ACPI dump of my laptop(BIOS ver. 1.48 Rev.A):
+ 
 * [Firmware Dumps](/ACPI/ACPI-Dumps/)
 * [Custom SSDTs](/ACPI/Custom-SSDTs/)
 
@@ -60,6 +61,7 @@ Hardware specific kexts:
 * [VoodooI2C](https://github.com/alexandred/VoodooI2C/)
 * [VoodooI2CHID](https://github.com/alexandred/VoodooI2C/)
 * [AlpsT4USB](https://github.com/blankmac/AlpsT4USB/releases)
+  * A prebuilt for the latest(7faceb9) can be found here: [AlpsT4USB.kext](/Kexts/AlpsT4USB.kext.zip)
 
 ## Configuration Specifics
 
@@ -91,8 +93,6 @@ Hardware specific kexts:
   
 ## Miscellaneous Faixes
 
-Mainly quality of life improvements.
-
 **HiDPI**:
 
 * See here: [HiDPI Fix-up](/HiDPI-Fixup/)
@@ -104,14 +104,18 @@ Current issues:
 * I2C Screen sometimes gets into bad state even with XPS0/XPS3 reroutes
   * Need to look into implementing proper power states
 * IOUSBHost crashing in Catalina
-  * Gonna blame Intel Bluetooth, waiting for BCM94360NG to arrive
-* Newer Alps kext refuses to prelink, older doesn't support gestures 
+  * Intel Bluetooth being trash, waiting for BCM94360NG to arrive
+* Alps kext unloads when keyboard cover disconnects(about 2 min after)
+  * Loading from macOS doesn't work either
+  * Midi's G2 doesn't have this issue, gonna blame G1 + BlackMac not using a G1
 * Using RTC ACPI Patch, need to find correct offset to block with [RTCMemoryFixup](https://github.com/acidanthera/RTCMemoryFixup/releases)
-* Pulls 4.8w at Idle by default, 8w on average. 
+* Pulls 4.8w at Idle by default, 8w on average(4h Battery life). 
   * Would like to improve battery life a bit more with [CPUFriend](https://github.com/acidanthera/CPUFriend/releases)
+  * 4.2w with touch disabled
 * Look into cycle count in SSDT-BAT
   * [zprood's cycle count hack](https://github.com/acidanthera/VirtualSMC/blob/master/Docs/Transition%20from%20zprood's%20cycle%20count%20hack.md)
 * Add credit to SSDTs:
   * [midi1996](https://github.com/midi1996)
   * [BlackMac](https://github.com/blankmac)
+  * [Rehabman](https://github.com/RehabMan)
 
