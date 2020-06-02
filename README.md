@@ -12,6 +12,28 @@ AUDIO:   CX20724
 Touch:   Wacom HID Based Display(WCOM4814)
 ```
 
+## What's working
+
+* USB/C Hot-plug
+* USB-C DP Output
+  * HDMI adapters *should* work, too lazy to test
+* Mic, speakers and headphones
+* CPU Power Management
+* HiDPI
+* Touchscreen and pen
+  * Using the [Wacom Bamboo Ink Pen] (https://www.wacom.com/en-us/products/stylus/bamboo-ink), all Wacom AES based pens should work with the HP Elite X2 G1 and G2
+
+
+## What's not working
+
+* Battery cycle and temps
+* Alps kext unloading
+  * Fixed if installed in L/E(sadly)
+* VoodooI2C working intermediately
+  * Mojave doesn't exhibit this issue, only Catalina
+* GPU Firmware
+  * Needs ME 12 firmware, which is only found on Z390 and newer
+
 ## ACPI
 
 
@@ -44,12 +66,9 @@ For a full list of ACPI patches, see here: [patches.plist](/ACPI/Custom-SSDTs/pa
 Thanks to DhiankG, XOSI renames are no longer needed. Instead only needing the following patch:
 
 ```
-Comment:
-	Enable Touchscreen in macOS
-Find:
-	95 4F 53 59 53 0B DC 07
-Replace:
-	95 4F 53 59 53 0B 00 00
+Comment | String |  Enable Touchscreen in macOS
+Find    |  Data  |  95 4F 53 59 53 0B DC 07
+Replace |  Data  |  95 4F 53 59 53 0B 00 00
 ```
 
 [Source](https://ptb.discordapp.com/channels/186648463541272576/573338555305295903/713434444861800589)
@@ -68,10 +87,10 @@ Hardware specific kexts:
 **DeviceProperties**:
 
 * `PciRoot(0x0)/Pci(0x1F,0x3)`
-  * `alc-layout-id | Data | 03000000`
+  * `layout-id | Data | 03000000`
 * `PciRoot(0x0)/Pci(0x2,0x0)`
   * `APPL,ig-platform-id | Data | 00001E19`
-    * (Apple uses `03001E19` on lower end MacBooks(M3))
+    * (Apple uses `03001E19` on lower end MacBooks(M3) so if there's issues try this ID)
   
   
 **Kernel**:
