@@ -1,7 +1,10 @@
 /*
  * Allows AppleSMBus to load
+ *
+ * Source:
+ *   https://github.com/acidanthera/OpenCorePkg/blob/master/Docs/AcpiSamples/SSDT-SBUS-MCHC.dsl
  */
-DefinitionBlock ("", "SSDT", 2, "Slav", "MCHCSBUS", 0x00000000)
+DefinitionBlock ("", "SSDT", 2, "Khrono", "MCHCSBUS", 0x00000000)
 {
     External (_SB_.PCI0, DeviceObj)
     External (_SB_.PCI0.SBUS.BUS0, DeviceObj)

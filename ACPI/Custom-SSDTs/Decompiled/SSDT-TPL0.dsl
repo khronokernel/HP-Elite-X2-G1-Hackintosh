@@ -1,7 +1,10 @@
 /*
  * Attempts to fix I2C touchscreen state
+ *
+ * Source:
+ *   https://github.com/midi1996/X2G2-opencore-hackintosh/blob/master/files/ACPI/SSDT-TPL0.aml
  */
-DefinitionBlock ("", "SSDT", 2, "Slav", "_I2C", 0x00000000)
+DefinitionBlock ("", "SSDT", 2, "Khrono", "_I2C", 0x00000000)
 {
     External (_SB_.PCI0.I2C0.TPL0, DeviceObj)
     External (_SB_.PCI0.I2C0.TPL0.XPS0, MethodObj)    // 0 Arguments

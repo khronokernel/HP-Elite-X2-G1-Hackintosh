@@ -1,9 +1,13 @@
 /*
  * Enables backlight control in macOS
  *
- * TO DO: Remove unneeded entries
+ * Source:
+ *   https://github.com/acidanthera/WhateverGreen/blob/master/Manual/SSDT-PNLF.dsl
+ *
+ * TO DO: 
+ *   Remove unneeded entries for other platforms
  */
-DefinitionBlock ("", "SSDT", 2, "Slav", "_PNLF", 0x00000000)
+DefinitionBlock ("", "SSDT", 2, "Khrono", "_PNLF", 0x00000000)
 {
     External (_SB_.PCI0.GFX0, DeviceObj)
     External (RMCF.BKLT, IntObj)

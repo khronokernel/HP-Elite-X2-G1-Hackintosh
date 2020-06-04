@@ -1,7 +1,10 @@
 /*
  * Fixes reboots when shutting down
+ * 
+ * Source:
+ *   https://github.com/RehabMan/Laptop-DSDT-Patch/blob/master/system/system_Shutdown_restart.txt
  */
-DefinitionBlock ("", "SSDT", 2, "Slav", "PTS", 0x00000000)
+DefinitionBlock ("", "SSDT", 2, "Khrono", "PTS", 0x00000000)
 {
     External (_SB_.PCI0.XHC_.PMEE, IntObj)
     External (ZPTS, MethodObj)    // 1 Arguments

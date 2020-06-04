@@ -1,7 +1,10 @@
 /*
  * Fixes USB-C Hotplug support
+ *
+ * Source:
+ *   https://github.com/midi1996/X2G2-opencore-hackintosh/blob/master/files/ACPI/SSDT-TBHP.aml
  */
-DefinitionBlock ("", "SSDT", 2, "Slav", "hotplg", 0x00000000)
+DefinitionBlock ("", "SSDT", 2, "Khrono", "hotplg", 0x00000000)
 {
     External (_SB_.PCI0, DeviceObj)
     External (_SB_.PCI0.RP01, DeviceObj)

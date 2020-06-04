@@ -1,7 +1,10 @@
 /*
  * Enables XCPM support for our CPU
+ *
+ * Source:
+ *   https://github.com/acidanthera/OpenCorePkg/blob/master/Docs/AcpiSamples/SSDT-PLUG.dsl
  */
-DefinitionBlock ("", "SSDT", 2, "Slav", "CpuPlug", 0x00003000)
+DefinitionBlock ("", "SSDT", 2, "Khrono", "CpuPlug", 0x00003000)
 {
     External (_PR_.CPU0, ProcessorObj)
 

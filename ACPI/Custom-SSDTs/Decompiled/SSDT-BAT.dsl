@@ -1,7 +1,10 @@
 /*
  * Following SSDT-BAT was taken from midi1996 with ACPI Hotpatch changes
+ *
+ * Source:
+ *   https://github.com/midi1996/X2G2-opencore-hackintosh/blob/master/files/ACPI/SSDT-BAT.aml
  */
-DefinitionBlock ("", "SSDT", 2, "Slav", "BATTERY", 0x00000000)
+DefinitionBlock ("", "SSDT", 2, "Khrono", "BATTERY", 0x00000000)
 {
     External (_SB_.NBST, PkgObj)
     External (_SB_.NBTI, PkgObj)

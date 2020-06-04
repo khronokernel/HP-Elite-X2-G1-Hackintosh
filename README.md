@@ -49,14 +49,16 @@ For those curious, I've also provided an ACPI dump of my laptop(BIOS ver. 1.48 R
 | :--- | :--- | :--- |
 | SSDT-BAT | [A lot](/ACPI/Custom-SSDTs/battery.plist) | Fixes Battery Readouts |
 | SSDT-EC-USBX | N/A | Creates a fake EC and adds USB Power Properties |
-| SSDT-HP-FixLidSleep | N/A | Fixes sleep with keyboard lid |
+| SSDT-HP-FixLidSleep | N/A | Fixes `e005` keyboard spam |
 | SSDT-PLUG | N/A | Adds `plugin-type` to `\_PR.CPU0`, allows XCPM to load |
 | SSDT-PNLF | N/A | Adds Backlight control support |
-| SSDT-PTS | `_PTS` to `XPTS` | Fixes USB Shutdown calls |
-| SSDT-SBUS-MCHC | N/A | Allows AppleSMBus to load |
-| SSDT-SLPB | N/A | Fixes Sleep button support(maybe? Doesn't work for me) |
+| SSDT-PTS | `_PTS` to `XPTS` | Reroutes USB Shutdown calls |
+| SSDT-SBUS-MCHC | N/A | Allows AppleSMBus and co to load |
+| SSDT-SLPB | N/A | Fixes Sleep button support |
 | SSDT-TBHP | N/A | Fixes USB-C Hot-plug |
-| SSDT-TPL0 | `PS0`/`PS3` to `XPS0`/`XPS3` | Attempts to fix I2C touchscreen |
+| SSDT-TPL0 | `PS0`/`PS3` to `XPS0`/`XPS3` | Attempts to fix I2C touchscreen * |
+
+* Need to look into proper `_PS0`/`_PS3` fixes for I2C
 
 For a full list of ACPI patches, see here: [patches.plist](/ACPI/Custom-SSDTs/patches.plist)
 
@@ -90,7 +92,8 @@ Hardware specific kexts:
   * `layout-id | Data | 03000000`
 * `PciRoot(0x0)/Pci(0x2,0x0)`
   * `APPL,ig-platform-id | Data | 00001E19`
-    * (Apple uses `03001E19` on lower end MacBooks(M3) so if there's issues try this ID)
+    * Apple uses `03001E19` on lower end MacBooks(M3)
+    * M7 failed to boot with is so try either and see whcih works best for you
   
   
 **Kernel**:
@@ -98,12 +101,6 @@ Hardware specific kexts:
 * Quirks:
   * `AppleCpuPmCfgLock` set to True
   * `AppleCpuPmCfgLock` set to True
-
-**Misc**:
-
-* `BlessOverride`:
-  * `\EFI\Microsoft\Boot\bootmgrfw.efi`
-    * (Needed for when dual boting Windows via OC)
   
 **PlatformInfo**:
 
@@ -122,19 +119,14 @@ Current issues:
 
 * I2C Screen sometimes gets into bad state even with XPS0/XPS3 reroutes
   * Need to look into implementing proper power states
+  * Reboots between Mojave and catalina fix the issue, not really a fix but works for now
 * IOUSBHost crashing in Catalina
   * Intel Bluetooth being trash, waiting for BCM94360NG to arrive
 * Alps kext unloads when keyboard cover disconnects(about 2 min after)
   * Loading from macOS doesn't work either
   * Midi's G2 doesn't have this issue, gonna blame G1 + BlackMac not using a G1
-* Using RTC ACPI Patch, need to find correct offset to block with [RTCMemoryFixup](https://github.com/acidanthera/RTCMemoryFixup/releases)
-* Pulls 4.8w at Idle by default, 8w on average(4h Battery life). 
-  * Would like to improve battery life a bit more with [CPUFriend](https://github.com/acidanthera/CPUFriend/releases)
-  * 4.2w with touch disabled
+* ~~Using RTC ACPI Patch, need to find correct offset to block with [RTCMemoryFixup](https://github.com/acidanthera/RTCMemoryFixup/releases)~~
+  * As of BIOS ver.01.45, the region is `DF-E0`
 * Look into cycle count in SSDT-BAT
   * [zprood's cycle count hack](https://github.com/acidanthera/VirtualSMC/blob/master/Docs/Transition%20from%20zprood's%20cycle%20count%20hack.md)
-* Add credit to SSDTs:
-  * [midi1996](https://github.com/midi1996)
-  * [BlackMac](https://github.com/blankmac)
-  * [Rehabman](https://github.com/RehabMan)
 

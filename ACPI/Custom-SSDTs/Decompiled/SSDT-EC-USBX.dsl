@@ -1,7 +1,10 @@
 /*
  * Fixes USB Power Properties and creates a fake EC to satisfy macOS
+ *
+ * Source:
+ *   https://github.com/acidanthera/OpenCorePkg/blob/master/Docs/AcpiSamples/SSDT-EC-USBX.dsl
  */
-DefinitionBlock ("", "SSDT", 2, "Slav", "SsdtEC", 0x00001000)
+DefinitionBlock ("", "SSDT", 2, "Khrono", "SsdtEC", 0x00001000)
 {
     External (_SB_.PCI0.LPCB, DeviceObj)
 
