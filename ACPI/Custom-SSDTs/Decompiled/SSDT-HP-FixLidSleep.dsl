@@ -17,7 +17,7 @@ DefinitionBlock ("", "SSDT", 2, "Khrono", "RMKB", 0x00000000)
             Package (0x02)
             {
                 Package (0x00){}, 
-                "e005=0"
+                "e005=0" // Setting to Zero will nullify all calls from e005(EC's _Q09 Method)
             }
         }
     })

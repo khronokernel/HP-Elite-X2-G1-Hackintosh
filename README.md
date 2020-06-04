@@ -127,6 +127,6 @@ Current issues:
   * Midi's G2 doesn't have this issue, gonna blame G1 + BlackMac not using a G1
 * ~~Using RTC ACPI Patch, need to find correct offset to block with [RTCMemoryFixup](https://github.com/acidanthera/RTCMemoryFixup/releases)~~
   * As of BIOS ver.01.45, the region is `DF-E0`
-* Look into cycle count in SSDT-BAT
+* Look into cycle count and temperature in SSDT-BAT
   * [zprood's cycle count hack](https://github.com/acidanthera/VirtualSMC/blob/master/Docs/Transition%20from%20zprood's%20cycle%20count%20hack.md)
 

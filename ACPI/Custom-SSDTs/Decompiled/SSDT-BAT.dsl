@@ -340,29 +340,28 @@ DefinitionBlock ("", "SSDT", 2, "Khrono", "BATTERY", 0x00000000)
                             Buffer (0x6B){}
                         }
                     DerefOf (Local0 [One]) [Zero] = B1B2 (DC00, DC01)
-                    DerefOf (Local0 [One]) [One] = (B1B2 (DC00, 
-                        DC01) >> 0x08)
+                    DerefOf (Local0 [One]) [One] = (B1B2 (DC00, DC01) >> 
+                        0x08)
                     DerefOf (Local0 [One]) [0x02] = B1B2 (FC00, FC01)
-                    DerefOf (Local0 [One]) [0x03] = (B1B2 (FC00, 
-                        FC01) >> 0x08)
+                    DerefOf (Local0 [One]) [0x03] = (B1B2 (FC00, FC01) >> 
+                        0x08)
                     DerefOf (Local0 [One]) [0x04] = B1B2 (RC00, RC01)
-                    DerefOf (Local0 [One]) [0x05] = (B1B2 (RC00, 
-                        RC01) >> 0x08)
+                    DerefOf (Local0 [One]) [0x05] = (B1B2 (RC00, RC01) >> 
+                        0x08)
                     DerefOf (Local0 [One]) [0x06] = B1B2 (ME00, ME01)
-                    DerefOf (Local0 [One]) [0x07] = (B1B2 (ME00, 
-                        ME01) >> 0x08)
+                    DerefOf (Local0 [One]) [0x07] = (B1B2 (ME00, ME01) >> 
+                        0x08)
                     DerefOf (Local0 [One]) [0x08] = B1B2 (CC00, CC01)
-                    DerefOf (Local0 [One]) [0x09] = (B1B2 (CC00, 
-                        CC01) >> 0x08)
+                    DerefOf (Local0 [One]) [0x09] = (B1B2 (CC00, CC01) >> 
+                        0x08)
                     Local1 = B1B2 (BT00, BT01)
                     Local1 -= 0x0AAC
                     Divide (Local1, 0x0A, Local2, Local3)
                     DerefOf (Local0 [One]) [0x0A] = Local3
-                    DerefOf (Local0 [One]) [0x0B] = (Local3 >> 0x08
-                        )
+                    DerefOf (Local0 [One]) [0x0B] = (Local3 >> 0x08)
                     DerefOf (Local0 [One]) [0x0C] = B1B2 (PV00, PV01)
-                    DerefOf (Local0 [One]) [0x0D] = (B1B2 (PV00, 
-                        PV01) >> 0x08)
+                    DerefOf (Local0 [One]) [0x0D] = (B1B2 (PV00, PV01) >> 
+                        0x08)
                     Local1 = B1B2 (PR00, PR01)
                     If (Local1)
                     {
@@ -374,26 +373,25 @@ DefinitionBlock ("", "SSDT", 2, "Khrono", "BATTERY", 0x00000000)
                     }
 
                     DerefOf (Local0 [One]) [0x0E] = Local1
-                    DerefOf (Local0 [One]) [0x0F] = (Local1 >> 0x08
-                        )
+                    DerefOf (Local0 [One]) [0x0F] = (Local1 >> 0x08)
                     DerefOf (Local0 [One]) [0x10] = B1B2 (DV00, DV01)
-                    DerefOf (Local0 [One]) [0x11] = (B1B2 (DV00, 
-                        DV01) >> 0x08)
+                    DerefOf (Local0 [One]) [0x11] = (B1B2 (DV00, DV01) >> 
+                        0x08)
                     DerefOf (Local0 [One]) [0x12] = B1B2 (TS00, TS01)
-                    DerefOf (Local0 [One]) [0x13] = (B1B2 (TS00, 
-                        TS01) >> 0x08)
+                    DerefOf (Local0 [One]) [0x13] = (B1B2 (TS00, TS01) >> 
+                        0x08)
                     DerefOf (Local0 [One]) [0x14] = B1B2 (CA00, CA01)
-                    DerefOf (Local0 [One]) [0x15] = (B1B2 (CA00, 
-                        CA01) >> 0x08)
+                    DerefOf (Local0 [One]) [0x15] = (B1B2 (CA00, CA01) >> 
+                        0x08)
                     DerefOf (Local0 [One]) [0x16] = B1B2 (CB00, CB01)
-                    DerefOf (Local0 [One]) [0x17] = (B1B2 (CB00, 
-                        CB01) >> 0x08)
+                    DerefOf (Local0 [One]) [0x17] = (B1B2 (CB00, CB01) >> 
+                        0x08)
                     DerefOf (Local0 [One]) [0x18] = B1B2 (CD00, CD01)
-                    DerefOf (Local0 [One]) [0x19] = (B1B2 (CD00, 
-                        CD01) >> 0x08)
+                    DerefOf (Local0 [One]) [0x19] = (B1B2 (CD00, CD01) >> 
+                        0x08)
                     DerefOf (Local0 [One]) [0x1A] = B1B2 (CE00, CE01)
-                    DerefOf (Local0 [One]) [0x1B] = (B1B2 (CE00, 
-                        CE01) >> 0x08)
+                    DerefOf (Local0 [One]) [0x1B] = (B1B2 (CE00, CE01) >> 
+                        0x08)
                     CreateField (DerefOf (Local0 [One]), 0xE0, 0x80, BTSN)
                     BTSN = GBSS (B1B2 (SN00, SN01), B1B2 (AT00, AT01))
                     Local1 = GBMF ()
@@ -801,7 +799,7 @@ DefinitionBlock ("", "SSDT", 2, "Khrono", "BATTERY", 0x00000000)
 
     Scope (\_TZ)
     {
-        Method (_TZ.GCGC, 0, Serialized)
+        Method (GCGC, 0, Serialized)
         {
             Name (LTMP, Buffer (0x02){})
             If (\_SB.PCI0.LPCB.EC0.ECRG)
@@ -811,7 +809,7 @@ DefinitionBlock ("", "SSDT", 2, "Khrono", "BATTERY", 0x00000000)
                 Release (\_SB.PCI0.LPCB.EC0.ECMX)
             }
 
-            Return (LTMP) /* \_TZ_._TZ_.GCGC.LTMP */
+            Return (LTMP) /* \_TZ_.GCGC.LTMP */
         }
 
         Method (B1B2, 2, NotSerialized)
@@ -820,4 +818,3 @@ DefinitionBlock ("", "SSDT", 2, "Khrono", "BATTERY", 0x00000000)
         }
     }
 }
-
