@@ -15,8 +15,7 @@ Touch:   Wacom HID Based Display(WCOM4814)
 ## What's working
 
 * USB/C Hot-plug
-* USB-C DP Output
-  * HDMI adapters *should* work, too lazy to test
+* USB-C DP/HDMI Output
 * Mic, speakers and headphones
 * CPU Power Management
 * HiDPI
@@ -30,9 +29,9 @@ Touch:   Wacom HID Based Display(WCOM4814)
 * Alps kext unloading
   * Fixed if installed in L/E(sadly)
 * VoodooI2C working intermediately
-  * Mojave doesn't exhibit this issue, only Catalina
-* GPU Firmware
-  * Needs ME 12 firmware, which is only found on Z390 and newer
+  * Related to ACPI power states
+* DRM
+  * No iGPU has working DRM
 
 ## ACPI
 
@@ -73,8 +72,6 @@ Find    |  Data  |  95 4F 53 59 53 0B DC 07
 Replace |  Data  |  95 4F 53 59 53 0B 00 00
 ```
 
-[Source](https://ptb.discordapp.com/channels/186648463541272576/573338555305295903/713434444861800589)
-
 ## Kexts
 
 Hardware specific kexts:
@@ -93,7 +90,7 @@ Hardware specific kexts:
 * `PciRoot(0x0)/Pci(0x2,0x0)`
   * `APPL,ig-platform-id | Data | 00001E19`
     * Apple uses `03001E19` on lower end MacBooks(M3)
-    * M7 failed to boot with is so try either and see whcih works best for you
+    * M7 failed to boot with this so try either and see which works best for you
   
   
 **Kernel**:
@@ -123,10 +120,11 @@ Current issues:
 * IOUSBHost crashing in Catalina
   * Intel Bluetooth being trash, waiting for BCM94360NG to arrive
 * Alps kext unloads when keyboard cover disconnects(about 2 min after)
-  * Loading from macOS doesn't work either
   * Midi's G2 doesn't have this issue, gonna blame G1 + BlackMac not using a G1
-* ~~Using RTC ACPI Patch, need to find correct offset to block with [RTCMemoryFixup](https://github.com/acidanthera/RTCMemoryFixup/releases)~~
-  * As of BIOS ver.01.45, the region is `DF-E0`
+  * Installing into L/E works(Sadly)
+* Using RTC ACPI Patch, need to find correct offset to block with [RTCMemoryFixup](https://github.com/acidanthera/RTCMemoryFixup/releases)
+  * As of BIOS ver.01.45, the main region is `DF-E0`
+  * Wake from deep sleep will cause a restart with RTC error, likely multiple regions need to be fixed
 * Look into cycle count and temperature in SSDT-BAT
   * [zprood's cycle count hack](https://github.com/acidanthera/VirtualSMC/blob/master/Docs/Transition%20from%20zprood's%20cycle%20count%20hack.md)
 
