@@ -1,5 +1,7 @@
 # HP Elite X2 1012 G1 Hackintosh
 
+![](/images/about-this-mac.png)
+
 Hardware Specs:
 
 ```
@@ -27,7 +29,7 @@ WIFI:    Fenvi BCM94360NG
     * [itlwm](https://github.com/zxystd/itlwm)
 	* [IntelBluetoothFirmware](https://github.com/zxystd/IntelBluetoothFirmware)(Note sleep breaks with this)
 * Touchscreen and pen
-  * Using the [Wacom Bamboo Ink Pen] (https://www.wacom.com/en-us/products/stylus/bamboo-ink), all Wacom AES based pens should work with the HP Elite X2 G1 and G2
+  * Using the [Wacom Bamboo Ink Pen](https://www.wacom.com/en-us/products/stylus/bamboo-ink), all Wacom AES based pens should work with the HP Elite X2 G1 and G2
 
 ## What's not working
 
