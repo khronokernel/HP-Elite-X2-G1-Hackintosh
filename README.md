@@ -1,5 +1,7 @@
 # HP Elite X2 1012 G1 Hackintosh
 
+**Note**: This is not a guide, merely an aid as to what this model requires. For a full guide, see here: [OpenCore Laptop Guide](https://dortania.github.io/vanilla-laptop-guide/)
+
 ![](/images/about-this-mac.png)
 
 Hardware Specs:
