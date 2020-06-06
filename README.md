@@ -1,8 +1,9 @@
-# HP Elite X2 G1 Hackintosh
+# HP Elite X2 1012 G1 Hackintosh
 
 Hardware Specs:
 
 ```
+MODEL    HP Elite X2 1012 G1
 CPU:     Intel M7 6Y75
 RAM:     8GB 1866MHz LPDDR3
 GPU:     HD 515
@@ -13,6 +14,7 @@ WIFI:    Fenvi BCM94360NG
 
 ## What's working
 
+* macOS Mojave 10.14.6 and Catalina 10.15.5
 * USB/C Hot-plug
 * USB-C DP/HDMI Output
 * Mic, speakers and headphones
@@ -27,17 +29,18 @@ WIFI:    Fenvi BCM94360NG
 * Touchscreen and pen
   * Using the [Wacom Bamboo Ink Pen] (https://www.wacom.com/en-us/products/stylus/bamboo-ink), all Wacom AES based pens should work with the HP Elite X2 G1 and G2
 
-
 ## What's not working
 
-* Battery cycle and temps
+* Battery cycle and temperature 
   * Not a deal breaker but would like to implement
 * VoodooI2C working intermediately
   * Related to ACPI power states
+  * Reboots between OSes fixes this
 * DRM
   * No iGPU has working DRM
 
 ## ACPI
+
 
 
 For those curious, I've also provided an ACPI dump of my laptop(BIOS ver. 1.48 Rev.A):
@@ -52,13 +55,14 @@ For those curious, I've also provided an ACPI dump of my laptop(BIOS ver. 1.48 R
 | :--- | :--- | :--- |
 | SSDT-BAT | [A lot](/ACPI/Custom-SSDTs/battery.plist) | Fixes Battery Readouts |
 | SSDT-EC-USBX | N/A | Creates a fake EC and adds USB Power Properties |
+| SSDT-GPRW | `GPRW` to `XPRW` | Fix random XDCI spams |
 | SSDT-HP-FixLidSleep | N/A | Fixes `e005` keyboard spam |
 | SSDT-PLUG | N/A | Adds `plugin-type` to `\_PR.CPU0`, allows XCPM to load |
 | SSDT-PNLF | N/A | Adds Backlight control support |
 | SSDT-PTS | `_PTS` to `XPTS` | Reroutes USB Shutdown calls |
 | SSDT-SBUS-MCHC | N/A | Allows AppleSMBus and co to load |
 | SSDT-SLPB | N/A | Fixes Sleep button support |
-| SSDT-TBHP | N/A | Fixes USB-C Hot-plug |
+| SSDT-TBHP | `_RMV` to `XRMV` | Fixes USB-C Hot-plug |
 | SSDT-TPL0 | `PS0`/`PS3` to `XPS0`/`XPS3` | Attempts to fix I2C touchscreen * |
 
 * Need to look into proper `_PS0`/`_PS3` fixes for I2C
@@ -68,7 +72,7 @@ For a full list of ACPI patches, see here: [patches.plist](/ACPI/Custom-SSDTs/pa
 
 **Removing XOSI Renames**:
 
-Thanks to DhiankG, XOSI renames are no longer needed. Instead only needing the following patch:
+Thanks to [DhinakG](https://github.com/dhinakg), XOSI renames are no longer needed. Instead only needing the following patch:
 
 ```
 Comment | String |  Enable Touchscreen in macOS
@@ -136,4 +140,6 @@ Current issues:
   * Wake from deep sleep will cause a restart with RTC error, likely multiple regions need to be fixed
 * Look into cycle count and temperature in SSDT-BAT
   * [zprood's cycle count hack](https://github.com/acidanthera/VirtualSMC/blob/master/Docs/Transition%20from%20zprood's%20cycle%20count%20hack.md)
+* Add info on XOSI alternative
+* Install El Capitan 10.11 and test pen pressure
 
