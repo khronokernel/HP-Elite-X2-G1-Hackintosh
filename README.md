@@ -1,15 +1,14 @@
 # HP Elite X2 G1 Hackintosh
 
-**THIS REPO IS STILL WORK IN PROGRESS**
-
 Hardware Specs:
 
 ```
 CPU:     Intel M7 6Y75
 RAM:     8GB 1866MHz LPDDR3
 GPU:     HD 515
-AUDIO:   CX20724
+AUDIO:   Conexant CX20724
 Touch:   Wacom HID Based Display(WCOM4814)
+WIFI:    Fenvi BCM94360NG
 ```
 
 ## What's working
@@ -18,7 +17,13 @@ Touch:   Wacom HID Based Display(WCOM4814)
 * USB-C DP/HDMI Output
 * Mic, speakers and headphones
 * CPU Power Management
+* Trackpad gestures 
 * HiDPI
+* Bluetooth and Wifi
+  * Card was swapped to BCM94360NG for better support
+  * Intel 8260 can use the following:
+    * [itlwm](https://github.com/zxystd/itlwm)
+	* [IntelBluetoothFirmware](https://github.com/zxystd/IntelBluetoothFirmware)(Note sleep breaks with this)
 * Touchscreen and pen
   * Using the [Wacom Bamboo Ink Pen] (https://www.wacom.com/en-us/products/stylus/bamboo-ink), all Wacom AES based pens should work with the HP Elite X2 G1 and G2
 
@@ -26,8 +31,7 @@ Touch:   Wacom HID Based Display(WCOM4814)
 ## What's not working
 
 * Battery cycle and temps
-* Alps kext unloading
-  * Fixed if installed in L/E(sadly)
+  * Not a deal breaker but would like to implement
 * VoodooI2C working intermediately
   * Related to ACPI power states
 * DRM
@@ -79,7 +83,7 @@ Hardware specific kexts:
 * [VoodooI2C](https://github.com/alexandred/VoodooI2C/)
 * [VoodooI2CHID](https://github.com/alexandred/VoodooI2C/)
 * [AlpsT4USB](https://github.com/blankmac/AlpsT4USB/releases)
-  * A prebuilt for the latest(7faceb9) can be found here: [AlpsT4USB.kext](/Kexts/AlpsT4USB.kext.zip)
+  * A prebuilt for the latest([7faceb9](https://github.com/blankmac/AlpsT4USB/commit/7faceb9740b82e250398552e64f39c52bf3f5977)) can be found here: [AlpsT4USB.kext](/Kexts/AlpsT4USB.kext.zip)
 
 ## Configuration Specifics
 
@@ -106,9 +110,19 @@ Hardware specific kexts:
   
 ## Miscellaneous Faixes
 
-**HiDPI**:
+### Battery Status
 
-* See here: [HiDPI Fix-up](/HiDPI-Fixup/)
+Grab [CoconutBattery](https://www.coconut-flavour.com/coconutbattery/), and set the format:
+
+```
+%ww %r
+```
+
+The above will show both wattage and time remaining
+
+### HiDPI
+
+See here: [HiDPI Fix-up](/HiDPI-Fixup/)
 
 ## TO-DO
 
@@ -116,12 +130,7 @@ Current issues:
 
 * I2C Screen sometimes gets into bad state even with XPS0/XPS3 reroutes
   * Need to look into implementing proper power states
-  * Reboots between Mojave and catalina fix the issue, not really a fix but works for now
-* IOUSBHost crashing in Catalina
-  * Intel Bluetooth being trash, waiting for BCM94360NG to arrive
-* Alps kext unloads when keyboard cover disconnects(about 2 min after)
-  * Midi's G2 doesn't have this issue, gonna blame G1 + BlackMac not using a G1
-  * Installing into L/E works(Sadly)
+  * Reboots between Mojave and Catalina fix the issue, not really a fix but works for now
 * Using RTC ACPI Patch, need to find correct offset to block with [RTCMemoryFixup](https://github.com/acidanthera/RTCMemoryFixup/releases)
   * As of BIOS ver.01.45, the main region is `DF-E0`
   * Wake from deep sleep will cause a restart with RTC error, likely multiple regions need to be fixed

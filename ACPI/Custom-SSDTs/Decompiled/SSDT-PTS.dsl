@@ -3,6 +3,9 @@
  * 
  * Source:
  *   https://github.com/RehabMan/Laptop-DSDT-Patch/blob/master/system/system_Shutdown_restart.txt
+ *
+ * Required patches:
+ *   _PTS to ZPTS rename  
  */
 DefinitionBlock ("", "SSDT", 2, "Khrono", "PTS", 0x00000000)
 {

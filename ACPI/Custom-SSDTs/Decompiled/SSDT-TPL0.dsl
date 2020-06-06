@@ -3,6 +3,10 @@
  *
  * Source:
  *   https://github.com/midi1996/X2G2-opencore-hackintosh/blob/master/files/ACPI/SSDT-TPL0.aml
+ *
+ * Required patches:
+ *   _PS0 to XPS0 rename
+ *   _PS3 to XPS3 rename  
  */
 DefinitionBlock ("", "SSDT", 2, "Khrono", "_I2C", 0x00000000)
 {

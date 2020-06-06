@@ -3,6 +3,9 @@
  *
  * Source:
  *   https://github.com/midi1996/X2G2-opencore-hackintosh/blob/master/files/ACPI/SSDT-TBHP.aml
+ *
+ * Required patches:
+ *   _RMV to XRMV rename 
  */
 DefinitionBlock ("", "SSDT", 2, "Khrono", "hotplg", 0x00000000)
 {
