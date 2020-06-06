@@ -109,7 +109,7 @@ Hardware specific kexts:
 
 * Quirks:
   * `AppleCpuPmCfgLock` set to True
-  * `AppleCpuPmCfgLock` set to True
+ 
   
 **PlatformInfo**:
 
