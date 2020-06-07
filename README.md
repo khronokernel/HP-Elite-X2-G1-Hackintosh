@@ -40,8 +40,9 @@ WIFI:    Fenvi BCM94360NG
 * VoodooI2C working intermediately
   * Related to ACPI power states
   * Reboots between OSes fixes this
-* DRM
+* GPU Based DRM
   * No iGPU has working DRM
+  * Chrome plays Netflix just fine
 
 ## ACPI
 
