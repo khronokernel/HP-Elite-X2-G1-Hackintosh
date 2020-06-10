@@ -23,6 +23,7 @@ DefinitionBlock ("", "SSDT", 2, "Khrono", "BATTERY", 0x00000000)
     External (_SB_.PCI0.LPCB.EC0_.CRZN, FieldUnitObj)
     External (_SB_.PCI0.LPCB.EC0_.ECMX, MutexObj)
     External (_SB_.PCI0.LPCB.EC0_.ECRG, IntObj)
+    External (_SB_.PCI0.LPCB.EC0_.GACS, MethodObj)    // 0 Arguments
     External (_SB_.PCI0.LPCB.EC0_.GBMF, MethodObj)    // 0 Arguments
     External (_SB_.PCI0.LPCB.EC0_.GBSS, MethodObj)    // 2 Arguments
     External (_SB_.PCI0.LPCB.EC0_.GCTL, MethodObj)    // 1 Arguments
