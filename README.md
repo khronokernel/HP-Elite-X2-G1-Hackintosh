@@ -32,10 +32,12 @@ WIFI:    Fenvi BCM94360NG
 	* [IntelBluetoothFirmware](https://github.com/zxystd/IntelBluetoothFirmware)(Note sleep breaks with this)
 * Touchscreen and pen
   * Using the [Wacom Bamboo Ink Pen](https://www.wacom.com/en-us/products/stylus/bamboo-ink), all Wacom AES based pens should work with the HP Elite X2 G1 and G2
+* Battery readouts
+  * Includes cycle count
 
 ## What's not working
 
-* Battery cycle and temperature 
+* Battery temperature 
   * Not a deal breaker but would like to implement
 * VoodooI2C working intermediately
   * Related to ACPI power states
@@ -143,8 +145,7 @@ Current issues:
 * Using RTC ACPI Patch, need to find correct offset to block with [RTCMemoryFixup](https://github.com/acidanthera/RTCMemoryFixup/releases)
   * As of BIOS ver.01.45, the main region is `DF-E0`
   * Wake from deep sleep will cause a restart with RTC error, likely multiple regions need to be fixed
-* Look into cycle count and temperature in SSDT-BAT
-  * [zprood's cycle count hack](https://github.com/acidanthera/VirtualSMC/blob/master/Docs/Transition%20from%20zprood's%20cycle%20count%20hack.md)
+* Look into temperature monitoring in SSDT-BAT
 * Add info on XOSI alternative
 * Install El Capitan 10.11 and test pen pressure
 

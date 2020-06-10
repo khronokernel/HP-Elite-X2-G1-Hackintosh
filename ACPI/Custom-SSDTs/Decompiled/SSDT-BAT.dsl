@@ -1,8 +1,10 @@
 /*
- * Following SSDT-BAT was taken from midi1996 with ACPI Hotpatch changes
+ * Base for SSDT-BAT was taken from midi1996 with ACPI Hotpatch changes
  *
  * Source:
  *   https://github.com/midi1996/X2G2-opencore-hackintosh/blob/master/files/ACPI/SSDT-BAT.aml
+ * 
+ * BTIF and BTIX method rewrites are written and maintained by Khronokernel
  */
 DefinitionBlock ("", "SSDT", 2, "Khrono", "BATTERY", 0x00000000)
 {
@@ -70,6 +72,9 @@ DefinitionBlock ("", "SSDT", 2, "Khrono", "BATTERY", 0x00000000)
     External (NLB2, UnknownObj)
     External (NLO2, UnknownObj)
     External (PSSB, UnknownObj)
+    
+    // Add missing BAT0 method
+    External (_SB_.BAT0, DeviceObj)
 
     Scope (_SB.PCI0.LPCB.EC0)
     {
@@ -195,26 +200,44 @@ DefinitionBlock ("", "SSDT", 2, "Khrono", "BATTERY", 0x00000000)
             Acquire (ECMX, 0xFFFF)
             If (ECRG)
             {
-                BSEL = Arg0
-                Local0 = B1B2 (FC00, FC01)
-                DerefOf (NBTI [Arg0]) [One] = Local0
-                DerefOf (NBTI [Arg0]) [0x02] = Local0
-                DerefOf (NBTI [Arg0]) [0x04] = B1B2 (DV00, DV01)
-                Local0 = (B1B2 (FC00, FC01) * NLB1) /* External reference */
+                BSEL = Arg0 // Battery index for dual-battery laptops
+                
+                // Battery Full Capacity (last full charge capacity)
+                // It's either HP's mistake or intentional lie
+                // they are putting last full charge capacity
+                // in both Last Full Charge Capacity and
+                // Design Capacity field.
+                // I'll correct it below.
+                
+                Local0 = B1B2 (DC00, DC01)                       // Fix for HP's bug - Pulled from GBTI's Method
+                DerefOf (NBTI [Arg0]) [One] = Local0             // Design Capacity
+                Local0 = B1B2 (DC00, DC01)
+                DerefOf (NBTI [Arg0]) [0x02] = Local0            // Last Full Charge Capacity
+                DerefOf (NBTI [Arg0]) [0x04] = B1B2 (DV00, DV01) // Design Voltage
+                Local0 = (B1B2 (FC00, FC01) * NLB1)
                 Divide (Local0, 0x64, Local3, Local4)
-                DerefOf (NBTI [Arg0]) [0x05] = Local4
+                DerefOf (NBTI [Arg0]) [0x05] = Local4            // Design Capacity of Warning
                 Local0 = (B1B2 (FC00, FC01) * NLO2) /* External reference */
                 Divide (Local0, 0x64, Local3, Local4)
-                DerefOf (NBTI [Arg0]) [0x06] = Local4
+                DerefOf (NBTI [Arg0]) [0x06] = Local4            // Design Capacity of Low
                 Local0 = B1B2 (SN00, SN01)
                 Local1 = B1B2 (AT00, AT01)
+                
+                /*
+                // Battery Cycle Count, this is zprood's extension, 
+                // look that index is 0x0D, which is not allowed for _BIF
+                
                 DerefOf (NBTI [Arg0]) [0x0D] = B1B2 (CC00, CC01)
+                
+                // RehabMan's extension, temperature should not be provided here
+                
                 Acquire (\_SB.PCI0.LPCB.EC0.ECMX, 0xFFFF)
                 \_SB.PCI0.LPCB.EC0.CRZN = 0x05
-                Local2 = \_SB.PCI0.LPCB.EC0.TEMP /* External reference */
+                Local2 = \_SB.PCI0.LPCB.EC0.TEMP
                 Release (\_SB.PCI0.LPCB.EC0.ECMX)
-                Local2 = ((Local2 * 0x0A) + 0x0AAC)
+                Local2 = ((Local2 * 0x0A) + 0x0AAC) // Celsius to .1K
                 DerefOf (NBTI [Arg0]) [0x0E] = Local2
+                */
             }
 
             Release (ECMX)
@@ -757,7 +780,7 @@ DefinitionBlock ("", "SSDT", 2, "Khrono", "BATTERY", 0x00000000)
     {
         Name (NBTI, Package (0x02)
         {
-            Package (0x0F)
+            Package (0x0D) // change package length back to 0x0D
             {
                 One, 
                 0xFFFFFFFF, 
@@ -771,12 +794,15 @@ DefinitionBlock ("", "SSDT", 2, "Khrono", "BATTERY", 0x00000000)
                 "Primary", 
                 "100000", 
                 "LIon", 
-                "Hewlett-Packard", 
-                Zero, 
-                Zero
+                "Hewlett-Packard",
+                // extra fields are removed
+                /*
+                Zero, // extension for cycle count
+                Zero  // extension for temperature
+                */
             }, 
 
-            Package (0x0F)
+            Package (0x0D) // change package length back to 0x0D
             {
                 One, 
                 0xFFFFFFFF, 
@@ -790,9 +816,12 @@ DefinitionBlock ("", "SSDT", 2, "Khrono", "BATTERY", 0x00000000)
                 "Travel", 
                 "100000", 
                 "LIon", 
-                "Hewlett-Packard", 
-                Zero, 
-                Zero
+                "Hewlett-Packard",
+                // extra fields are removed
+                /*
+                Zero, // extension for cycle count
+                Zero  // extension for temperature
+                */
             }
         })
     }
@@ -815,6 +844,161 @@ DefinitionBlock ("", "SSDT", 2, "Khrono", "BATTERY", 0x00000000)
         Method (B1B2, 2, NotSerialized)
         {
             Return ((Arg0 | (Arg1 << 0x08)))
+        }
+    }
+    // Implement _BIX method:
+    Scope(\_SB.BAT0)
+    {
+        Method (_BIX, 0, NotSerialized)
+        {
+            Return (BTIX (Zero))
+        }
+    }
+    Scope (\_SB)
+    {
+        Method (BTIX, 1, Serialized)
+        {
+            Local0 = ^PCI0.LPCB.EC0.BTIX (Arg0)
+            If ((Local0 == 0xFF))
+            {
+                Return (Package (0x15)
+                {
+                    One, // Add Revision field with value 1
+                    Zero,  // Power Unit
+                    0xFFFFFFFF, // Design Capacity
+                    0xFFFFFFFF, // Last Full Charge Capacity
+                    One, // Battery Technology
+                    0xFFFFFFFF, // Design Voltage
+                    Zero, // Design Capacity of Warning
+                    Zero, // Design Capacity of Low
+                    0xFFFFFFFF, // Add Cycle Count field
+                    100000, // Add Measurement Accuracy field with 100.000% value
+                    0xFFFFFFFF, // Add Max Sampling Time field
+                    0xFFFFFFFF, // Add Min Sampling Time field
+                    0xFFFFFFFF, // Add Max Averaging Interval field
+                    0xFFFFFFFF, // Add Min Averaging Interval field
+                    0xFFFFFFFF, // Battery Capacity Granularity 1
+                    0xFFFFFFFF, // Battery Capacity Granularity 2
+                    "", // Model Number
+                    "", // Serial Number
+                    "", // Battery Type
+                    Zero, // OEM Information
+                    One // Battery Swapping Capability _ added in Revision 1: Zero means Non-swappable, One _ Cold-swappable, 0x10 _ Hot-swappable
+                })
+            }
+            Else
+            {
+                Return (DerefOf (NBIX [Arg0]))
+            }
+        }
+
+        Name (NBIX, Package(0x02)
+        {
+            Package(0x15)
+            {
+                0x01, // Add Revision field with value 1
+                0x01,  // Power Unit
+                0xFFFFFFFF, // Design Capacity
+                0xFFFFFFFF, // Last Full Charge Capacity
+                0x01, // Battery Technology
+                0xFFFFFFFF, // Design Voltage
+                0x00, // Design Capacity of Warning
+                0x00, // Design Capacity of Low
+                0x00, // Add Cycle Count field
+                100000, // Add Measurement Accuracy field with 100.000% value
+                0xFFFFFFFF, // Add Max Sampling Time field
+                0xFFFFFFFF, // Add Min Sampling Time field
+                0xFFFFFFFF, // Add Min Averaging Interval field
+                0xFFFFFFFF, // Add Min Averaging Interval field
+                0x64, // Battery Capacity Granularity 1
+                0x64, // Battery Capacity Granularity 2
+                "Primary", // Model Number
+                "100000", // Serial Number
+                "LIon", // Battery Type
+                "Hewlett-Packard", // OEM Information
+                One // Battery Swapping Capability _ added in Revision 1: Zero means Non-swappable, One _ Cold-swappable, 0x10 _ Hot-swappable
+            },
+            Package(0x15)
+            {
+                0x01, // Add Revision field with value 1
+                0x01,  // Power Unit
+                0xFFFFFFFF, // Design Capacity
+                0xFFFFFFFF, // Last Full Charge Capacity
+                0x01, // Battery Technology
+                0xFFFFFFFF, // Design Voltage
+                0x00, // Design Capacity of Warning
+                0x00, // Design Capacity of Low
+                0x00, // Add Cycle Count field
+                100000, // Add Measurement Accuracy field with 100.000% value
+                0xFFFFFFFF, // Add Max Sampling Time field
+                0xFFFFFFFF, // Add Min Sampling Time field
+                0xFFFFFFFF, // Add Min Averaging Interval field
+                0xFFFFFFFF, // Add Min Averaging Interval field
+                0x64, // Battery Capacity Granularity 1
+                0x64, // Battery Capacity Granularity 2
+                "Travel", // Model Number
+                "100000", // Serial Number
+                "LIon", // Battery Type
+                "Hewlett-Packard", // OEM Information
+                One // Battery Swapping Capability _ added in Revision 1: Zero means Non-swappable, One _ Cold-swappable, 0x10 _ Hot-swappable
+            },
+        })
+    }
+
+    // BTIX is basically a copy of BTIF with changed field offsets according to _BIX definition in ACPI specification and added cycle count:
+    Scope (\_SB.PCI0.LPCB.EC0)
+    {
+        Method (BTIX, 1, Serialized)
+        {
+            Local7 = (One << Arg0)
+            BTDR (One)
+            If ((BSTA (Local7) == 0x0F))
+            {
+                Return (0xFF)
+            }
+
+            Acquire (BTMX, 0xFFFF)
+            Local0 = NGBF
+            Release (BTMX)
+            If (((Local0 & Local7) == Zero))
+            {
+                Return (Zero)
+            }
+
+            NBST [Arg0] = NDBS
+            Acquire (BTMX, 0xFFFF)
+            NGBT |= Local7
+            Release (BTMX)
+            Acquire (ECMX, 0xFFFF)
+            If (ECRG)
+            {
+                BSEL = Arg0 
+
+                Local0 = B1B2 (DC00, DC01)                       
+                DerefOf (NBIX [Arg0]) [0x02] = Local0            // +1 because of Revision field
+                Local0 = B1B2 (DC00, DC01)
+                DerefOf (NBIX [Arg0]) [0x03] = Local0            // +1
+                DerefOf (NBIX [Arg0]) [0x05] = B1B2 (DV00, DV01) // +1
+                Local0 = (B1B2 (FC00, FC01) * NLB1)
+                Divide (Local0, 0x64, Local3, Local4)
+                DerefOf (NBIX [Arg0]) [0x06] = Local4            // +1
+                Local0 = (B1B2 (FC00, FC01) * NLO2) 
+                Divide (Local0, 0x64, Local3, Local4)
+                DerefOf (NBIX [Arg0]) [0x07] = Local4            // +1
+                Local0 = B1B2 (SN00, SN01)
+                Local1 = B1B2 (AT00, AT01)
+                
+                DerefOf (NBIX [Arg0]) [0x08] = B1B2 (CC00, CC01) // Cycle Count _ new field
+
+            }
+
+            Release (ECMX)
+            Local2 = GBSS (Local0, Local1)
+            DerefOf (NBIX [Arg0]) [0x11] = Local2 // +7 because of Revision, Cycle Count, Measurement Accuracy, Max/Min Sampling Time, Max/Min Averaging Interval
+            Acquire (BTMX, 0xFFFF)
+            NGBF &= ~Local7
+            Release (BTMX)
+            Return (Zero)
         }
     }
 }
