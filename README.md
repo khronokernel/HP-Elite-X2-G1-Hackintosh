@@ -146,6 +146,7 @@ Current issues:
   * As of BIOS ver.01.45, the main region is `DF-E0`
   * Wake from deep sleep will cause a restart with RTC error, likely multiple regions need to be fixed
 * Look into temperature monitoring in SSDT-BAT
+  * Neither `_BIF` nor `BIX` support battery temperature, and and so VirtualSMC has no standard way of reading battery temps. Only fix is to implement battery readings from broken ACPI in vSMC, *yay...*
 * Add info on XOSI alternative
 * Install El Capitan 10.11 and test pen pressure
 
