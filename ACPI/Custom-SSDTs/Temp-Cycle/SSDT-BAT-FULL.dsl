@@ -988,7 +988,7 @@ DefinitionBlock ("", "SSDT", 2, "Khrono", "BATTERY", 0x00000000)
                 Local0 = B1B2 (SN00, SN01)
                 Local1 = B1B2 (AT00, AT01)
                 
-                DerefOf (NBTI [Arg0]) [0x08] = B1B2 (CC00, CC01) // Cycle Count _ new field
+                DerefOf (NBIX [Arg0]) [0x08] = B1B2 (CC00, CC01) // Cycle Count _ new field
 
             }
 
