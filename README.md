@@ -163,7 +163,8 @@ See here: [HiDPI Fix-up](/HiDPI-Fixup/)
 * Using RTC ACPI Patch, need to find correct offset to block with [RTCMemoryFixup](https://github.com/acidanthera/RTCMemoryFixup/releases)
   * As of BIOS ver.01.45, the main region is `DF-E0`
   * Wake from deep sleep will cause a restart with RTC error, likely multiple regions need to be fixed
-* Fix 3 key modifier(ie. Cmd + Shift + 4 won't register)
+* ~~Fix 3 key modifier(ie. Cmd + Shift + 4 won't register)~~
+  * DEBUG version of VoodooPS2 breaks it
 
 **Low Priority:**
 
