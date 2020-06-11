@@ -34,21 +34,39 @@ WIFI:    Fenvi BCM94360NG
   * Using the [Wacom Bamboo Ink Pen](https://www.wacom.com/en-us/products/stylus/bamboo-ink), all Wacom AES based pens should work with the HP Elite X2 G1 and G2
 * Battery readouts
   * Includes cycle count
+* Front webcam
 
 ## What's not working
 
 * Battery temperature 
-  * Not a deal breaker but would like to implement
+  * This would require either sending a PR or creating a new plugin to read `_BIF` readouts including those not in the ACPI spec
 * VoodooI2C working intermediately
   * Related to ACPI power states
   * Reboots between OSes fixes this
 * GPU Based DRM
   * No iGPU has working DRM
   * Chrome plays Netflix just fine
+* Micro SD card reader
+  * The G1's Intel based so no drivers, unsure what the G2 runs
+* Rear webcam
+  * Rear camera's I2C based
+  * Also why are you taking photos with a 12" tablet
+
+## Untested
+
+* Thunderbolt
+  * Personally don't own any Thunderbolt devices so can't test
+  * Cold booting the device with [ThunderboltReset](https://github.com/osy86/ThunderboltReset) and [ThunderboltPkg](https://github.com/al3xtjames/ThunderboltPkg) should work
+* Hibernation
+  * Requires RTC blacklisting, currently on [TO-DO List](#to-do)
+* Pen pressure and tilt in macOS Sierra and newer
+  * See here for potential fix: [VoodooI2CTouchscreenIOManager](https://www.tonymacx86.com/threads/guide-hp-elite-x2-1012-g1-g2-clover-uefi-virtualsmc-hot-patch.276500/post-2135378)
+* Smartcard reader
+  * Don't own or work with smartcards
+* WWAN Card
+  * Personally don't own any WWAN hardware so can't test
 
 ## ACPI
-
-
 
 For those curious, I've also provided an ACPI dump of my laptop(BIOS ver. 1.48 Rev.A):
  
@@ -137,7 +155,7 @@ See here: [HiDPI Fix-up](/HiDPI-Fixup/)
 
 ## TO-DO
 
-Current issues:
+**High Priority:**
 
 * I2C Screen sometimes gets into bad state even with XPS0/XPS3 reroutes
   * Need to look into implementing proper power states
@@ -145,9 +163,12 @@ Current issues:
 * Using RTC ACPI Patch, need to find correct offset to block with [RTCMemoryFixup](https://github.com/acidanthera/RTCMemoryFixup/releases)
   * As of BIOS ver.01.45, the main region is `DF-E0`
   * Wake from deep sleep will cause a restart with RTC error, likely multiple regions need to be fixed
+* Fix 3 key modifier(ie. Cmd + Shift + 4 won't register)
+
+**Low Priority:**
+
 * Look into temperature monitoring in SSDT-BAT
   * Neither `_BIF` nor `_BIX` support battery temperature, and so VirtualSMC has no standard way of [reading battery temps.](https://github.com/acidanthera/VirtualSMC/blob/master/Sensors/SMCBatteryManager/SMCSMBusController.cpp#L218L219) 
   * Add vSMC plugin for battery temperature
 * Add info on XOSI alternative
 * Install El Capitan 10.11 and test pen pressure
-
