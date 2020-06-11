@@ -51,6 +51,8 @@ WIFI:    Fenvi BCM94360NG
 * Rear webcam
   * Rear camera's I2C based
   * Also why are you taking photos with a 12" tablet
+* Fingerprint reader
+  * My model didn't ship with one, but in general they won't work
 
 ## Untested
 
@@ -65,6 +67,23 @@ WIFI:    Fenvi BCM94360NG
   * Don't own or work with smartcards
 * WWAN Card
   * Personally don't own any WWAN hardware so can't test
+* Accelerometer and Gyro
+* Light Sensor
+
+
+## BIOS Settings
+
+For the most part it's pretty stock, main guys you need to change:
+
+**Built-In Device Options**:
+
+* Video memory size = 64MB
+  * Our framebuffer in macOS requires 34MB minimum, otherwise it'll crash
+
+**Power Management Options**:
+
+* Wake on USB = False
+  * Will get random XHC spams with this enabled
 
 ## ACPI
 
