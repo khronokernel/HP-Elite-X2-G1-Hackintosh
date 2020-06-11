@@ -209,9 +209,9 @@ DefinitionBlock ("", "SSDT", 2, "Khrono", "BATTERY", 0x00000000)
                 // Design Capacity field.
                 // I'll correct it below.
                 
-                Local0 = B1B2 (DC00, DC01)                       // Fix for HP's bug - Pulled from GBTI's Method
+                Local0 = B1B2 (FC00, FC01)                       
                 DerefOf (NBTI [Arg0]) [One] = Local0             // Design Capacity
-                Local0 = B1B2 (DC00, DC01)
+                Local0 = B1B2 (DC00, DC01)                       // Fix for HP's bug - Pulled from GBTI's Method
                 DerefOf (NBTI [Arg0]) [0x02] = Local0            // Last Full Charge Capacity
                 DerefOf (NBTI [Arg0]) [0x04] = B1B2 (DV00, DV01) // Design Voltage
                 Local0 = (B1B2 (FC00, FC01) * NLB1)
@@ -974,7 +974,7 @@ DefinitionBlock ("", "SSDT", 2, "Khrono", "BATTERY", 0x00000000)
             {
                 BSEL = Arg0 
 
-                Local0 = B1B2 (DC00, DC01)                       
+                Local0 = B1B2 (FC00, FC01)                       
                 DerefOf (NBIX [Arg0]) [0x02] = Local0            // +1 because of Revision field
                 Local0 = B1B2 (DC00, DC01)
                 DerefOf (NBIX [Arg0]) [0x03] = Local0            // +1
